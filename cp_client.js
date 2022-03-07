@@ -1,32 +1,39 @@
 const https = require('https');
 var CPInitResponse = require('./model/cp_init_response');
-
-
+var CPNanogridDecoder = require('./model/cp_nanogriddecoder');
+var CPInitRequest = require('./model/cp_init_request');
 class CPClient {
     constructor(serverUrl, webServiceToken, packageName) {
         this.serverUrl = serverUrl;
         this.webServiceToken = webServiceToken;
         this.packageName = packageName;
-    }
-
-    init(initParam, success, fail) {
-        const data = JSON.stringify(initParam)
-        const options = {
+        this.options = {
             hostname: this.serverUrl,
             port: 443,
-            path: '/api/svc/clientinit',
             method: 'POST',
             headers: {
                 'Authorization': this.webServiceToken + ':' + this.packageName,
                 'Content-Type': 'application/json; charset=utf-8',
-                'Content-Length': data.length
+                'Content-Length': 0
             }
         };
+    }
+
+    /**
+     * 
+     * @param {CPInitRequest} initParam 
+     * @param {*} success 
+     * @param {*} fail 
+     */
+    init(initParam, success, fail) {
+        const data = JSON.stringify(initParam)
+        this.options.path = '/api/svc/clientinit';
+        this.options.headers['Content-Length'] = data.length;
 
         //console.log(options);
 
 
-        const request = https.request(options, res => {
+        const request = https.request(this.options, res => {
             console.log(`statusCode: ${res.statusCode}`)
 
             let data = '';
@@ -51,7 +58,13 @@ class CPClient {
         request.end()
     }
 
-    decode(detect, success, fail) {
+    /**
+     * 
+     * @param {CPNanogridDecoder} nanogridDecoder 
+     * @param {*} success 
+     * @param {*} fail 
+     */
+    decode(nanogridDecoder, success, fail) {
         https.get('https://' + this.serverUrl, (resp) => {
             console.log(`statusCode: ${resp.statusCode}`)
             let data = '';
