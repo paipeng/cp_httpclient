@@ -65,26 +65,39 @@ class CPClient {
      * @param {*} fail 
      */
     decode(nanogridDecoder, success, fail) {
-        https.get('https://' + this.serverUrl, (resp) => {
-            console.log(`statusCode: ${resp.statusCode}`)
-            let data = '';
+        const data = JSON.stringify(nanogridDecoder)
+        this.options.path = '/api/svc/nanogriddecoders';
+        this.options.headers['Content-Length'] = data.length;
 
-            // A chunk of data has been received.
-            resp.on('data', (chunk) => {
+        //console.log(options);
+
+
+        const request = https.request(this.options, res => {
+            console.log(`statusCode: ${res.statusCode}`)
+
+            let data = '';
+            res.on('data', (chunk) => {
                 data += chunk;
             });
+            res.on('end', () => {
+                if (res.statusCode == 201) {
+                    let object = JSON.parse(data);
+                    var ret = Object.assign(CPNanogridDecoder.prototype, object);
+                    success(ret);
 
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                console.log('end');
-                //console.log(JSON.parse(data).explanation);
-                success(JSON.parse(data).explanation);
+                } else {
+                    fail(res.statusCode);
+                }
             });
+        })
 
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
+        request.on('error', error => {
+            console.error(error)
             fail(err);
-        });
+        })
+
+        request.write(data)
+        request.end()
     }
 }
 
