@@ -1,17 +1,59 @@
 const https = require('https');
+var CPInitResponse = require('./model/cp_init_response');
 
-function CpClient() {
-    this.serverUrl = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
-
-}
 
 class CPClient {
-    constructor(serverUrl) {
+    constructor(serverUrl, webServiceToken, packageName) {
         this.serverUrl = serverUrl;
-
+        this.webServiceToken = webServiceToken;
+        this.packageName = packageName;
     }
+
+    init(initParam, success, fail) {
+        const data = JSON.stringify(initParam)
+        const options = {
+            hostname: this.serverUrl,
+            port: 443,
+            path: '/api/svc/clientinit',
+            method: 'POST',
+            headers: {
+                'Authorization': this.webServiceToken + ':' + this.packageName,
+                'Content-Type': 'application/json; charset=utf-8',
+                'Content-Length': data.length
+            }
+        };
+
+        //console.log(options);
+
+
+        const request = https.request(options, res => {
+            console.log(`statusCode: ${res.statusCode}`)
+
+            let data = '';
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+            res.on('end', () => {
+                //console.log(data);
+                //console.log(JSON.parse(data));
+
+                var ret = Object.assign(new CPInitResponse, data);
+                success(ret);
+            });
+        })
+
+        request.on('error', error => {
+            console.error(error)
+            fail(err);
+        })
+
+        request.write(data)
+        request.end()
+    }
+
     decode(detect, success, fail) {
-        https.get(this.serverUrl, (resp) => {
+        https.get('https://' + this.serverUrl, (resp) => {
+            console.log(`statusCode: ${resp.statusCode}`)
             let data = '';
 
             // A chunk of data has been received.
@@ -28,7 +70,7 @@ class CPClient {
 
         }).on("error", (err) => {
             console.log("Error: " + err.message);
-            //fail(err);
+            fail(err);
         });
     }
 }
