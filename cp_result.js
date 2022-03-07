@@ -1,7 +1,7 @@
-class CPDetect {
+class CPResult {
     constructor(height, width) {
         this.height = height;
         this.width = width;
     }
 }
-module.exports = CPDetect
+module.exports = CPResult
