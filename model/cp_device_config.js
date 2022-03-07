@@ -1,0 +1,86 @@
+
+class CPDeviceConfig {
+    constructor() {
+        this.id = 1;
+        this.createTime = 0;
+        this.updateTime = 0;
+        this.name = '';
+        this.dpi2000RangeMin = 0;
+        this.dpi2000RangeMax = 100;
+        this.dpi800RangeMin = 0;
+        this.dpi800RangeMax = 100;
+        this.zoom = 80;
+        this.dpi2000FocusBoxWidth = 400;
+        this.dpi2000FocusBoxHeight = 320;
+        this.dpi800FocusBoxWidth = 0;
+        this.dpi800FocusBoxHeight = 0;
+        this.dpiNew800FocusBoxWidth = null;
+        this.dpiNew800FocusBoxHeight = null;
+        this.photoSizeWidth = 0;
+        this.photoSizeHeight = 0;
+        this.previewSizeWidth = 0;
+        this.previewSizeHeight = 0;
+        this.positionErrorMargin = 50;
+        this.autoPhotoMinTimeInterval = null;
+        this.autoFocuTimeInterval = 2000;
+        this.focusMode = 0;
+        this.emetricThreshold = 0.5;
+        this.minDistToThreshold = 0;
+        this.minDiffBw = 30;
+        this.maxQuotAmplitudeBw = 20;
+        this.minEdgeEnergy = 3;
+        this.jpegCompress = 50;
+        this.s2iPicWidth = 640;
+        this.s2iPicHeight = 640;
+        this.s2iPicBorder = 104;
+        this.reflectDiff = 40;
+        this.detectCropImageWidthScale = 0.8;
+        this.detectCropImageHeightScale = 0.6;
+        this.uploadFullImageThumbnail = false;
+        this.thumbnailImageWidth = 0;
+        this.thumbnailImageHeight = 0;
+        this.takePic = true;
+        this.thumbnailImageJpegCompress = 180;
+        this.disableDecode = false;
+        this.forceLogin = false;
+        this.maxZoom = 80;
+        this.minZoom = 1;
+        this.focusLength = 1;
+        this.forceGps = false;
+        this.checkBorder = false;
+        this.borderThreshold = 1;
+        this.minDistanceBlackWhite = 20;
+        this.minSharpness = 10;
+        this.minIntensitive = 10;
+        this.minSNR = 10;
+        this.minBrightness = 70;
+        this.maxBrightness = 250;
+        this.minRescaleFactor = 0.8;
+        this.maxRescaleFactor = 1.3;
+        this.slaviFrameWidth = 400;
+        this.slaviZoom = 70;
+        this.exposureValue = 0;
+        this.inspectionSkipPreviewCount = 20;
+        this.remark = '';
+        this.opencvMinSharpness = 150;
+        this.opencvMaxReflection = 60;
+        this.opencvMinSizeRatio = 0.7;
+        this.opencvMaxSizeRatio = 1.5;
+        this.opencvAutoZoom = 0.7;
+        this.opencvZoom = 1;
+        this.opencvFrameWidth = 500;
+        this.opencvBorderSize = 104;
+        this.opencvResizeWidth = 640;
+        this.opencvResizeHeight = 640;
+        this.opencvMinBrightness = 50;
+        this.opencvMaxBrightness = 240;
+        this.cameraId = 0;
+        this.opencvRescaleFactor = 0.015;
+        this.opencvRecaptureThreshold = 0;
+        this.s2iQrMinRatio = 0;
+        this.s2iQrMaxRatio = 0
+    }
+
+}
+module.exports = CPDeviceConfig;
+

@@ -36,8 +36,8 @@ class CPClient {
             res.on('end', () => {
                 //console.log(data);
                 //console.log(JSON.parse(data));
-
-                var ret = Object.assign(new CPInitResponse, data);
+                let object = JSON.parse(data);
+                var ret = Object.assign(CPInitResponse.prototype, object);
                 success(ret);
             });
         })
