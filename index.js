@@ -1,3 +1,4 @@
+var bmp = require("./bmp/cp_bmp");
 
 var CPClient = require('./cp_client');
 var CPDetect = require('./cp_detect');
@@ -12,8 +13,9 @@ var httpClient = new CPClient(serverUrl, webServiceToken, packageName);
 var initRequest = new CPInitRequest(deviceType, udid, systemId);
 
 
-function readImage() {
-
+function readImageToBase64() {
+    var mat = bmp.reader(imageFile);
+    return bmp.writer(mat).base64();
 }
 
 /**
@@ -22,16 +24,22 @@ function readImage() {
  */
 function doDecode(initResponse) {
     const nanogridDecoder = new CPNanogridDecoder();
-    nanogridDecoder.shootingMode = initResponse.software.shootingModes[0];
-    nanogridDecoder.uniqueDevice = initResponse.uniqueDevice;
-    nanogridDecoder.softwareVersion = initResponse.software.softwareVersions[0];
+    nanogridDecoder.shootingMode = { id: initResponse.software.shootingModes[0].id };
+    nanogridDecoder.uniqueDevice = { udid: initResponse.uniqueDevice.udid };
+    //nanogridDecoder.uniqueDevice.device.deviceConfig = null;
+    delete nanogridDecoder.uniqueDevice.softwareName;
+    nanogridDecoder.softwareVersion = { versionCode: initResponse.software.softwareVersions[0].versionCode };//initResponse.software.softwareVersions[0];
     console.log(nanogridDecoder);
+    console.log(JSON.stringify(nanogridDecoder));
+
+    nanogridDecoder.base64String = 'data:image/bmp;base64,' + readImageToBase64();
 
     httpClient.decode(nanogridDecoder, function (result) {
         console.log(result);
     }, function (error) {
         console.error(error);
     });
+
 }
 
 
