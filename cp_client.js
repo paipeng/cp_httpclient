@@ -69,7 +69,7 @@ class CPClient {
         this.options.path = '/api/svc/nanogriddecoders';
         this.options.headers['Content-Length'] = data.length;
 
-        //console.log(options);
+        console.log(this.options);
 
 
         const request = https.request(this.options, res => {
