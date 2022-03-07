@@ -1,6 +1,7 @@
 var CPNanogridDpi = require('./cp_nanogrid_dpi');
 var CPSoftwareVersion = require('./cp_software_version');
 var CPShootingMode = require('./cp_shooting_mode');
+const CPSoftwareShootingMode = require('./cp_software_shooting_mode');
 class CPSoftware {
     constructor() {
         this.id = 61;
@@ -91,9 +92,9 @@ class CPSoftware {
         this.userId = null;
         this.nanogridDpi = new CPNanogridDpi();
 
-        this.softwareVersions = [];
-        this.softwareShootingMode = [];
-        this.shootingModes = [];
+        this.softwareVersions = new Array(new CPSoftwareVersion());
+        this.softwareShootingMode = new Array(new CPSoftwareShootingMode());
+        this.shootingModes = new Array(new CPShootingMode());
         this.softwareInspectionLocations = null
     }
 
