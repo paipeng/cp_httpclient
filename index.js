@@ -12,6 +12,29 @@ var httpClient = new CPClient(serverUrl, webServiceToken, packageName);
 var initRequest = new CPInitRequest(deviceType, udid, systemId);
 
 
+function readImage() {
+
+}
+
+/**
+ * 
+ * @param {CPInitResponse} initResponse 
+ */
+function doDecode(initResponse) {
+    const nanogridDecoder = new CPNanogridDecoder();
+    nanogridDecoder.shootingMode = initResponse.software.shootingModes[0];
+    nanogridDecoder.uniqueDevice = initResponse.uniqueDevice;
+    nanogridDecoder.softwareVersion = initResponse.software.softwareVersions[0];
+    console.log(nanogridDecoder);
+
+    httpClient.decode(nanogridDecoder, function (result) {
+        console.log(result);
+    }, function (error) {
+        console.error(error);
+    });
+}
+
+
 httpClient.init(
     initRequest,
     /**
@@ -22,6 +45,7 @@ httpClient.init(
         console.log(result.software.softwareShootingMode);
         console.log(result.software.shootingModes);
 
+        doDecode(result);
     },
 
     function (error) {
@@ -30,11 +54,3 @@ httpClient.init(
 );
 
 
-const nanogridDecoder = new CPNanogridDecoder(10, 10);
-console.log(nanogridDecoder);
-
-httpClient.decode(nanogridDecoder, function (result) {
-    console.log(result);
-}, function (error) {
-    console.error(error);
-});
