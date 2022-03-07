@@ -1,0 +1,32 @@
+{
+  "name": "cp_httpclient_js",
+  "version": "1.0.0",
+  "description": "A Pure Javascript Version for decoding httpclient",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:paipeng/cp_httpclient.git"
+  },
+  "keywords": [
+    "Decoding",
+    "Http",
+    "Restful API client"
+  ],
+  "author": "Pai Peng",
+  "license": "Apache License 2.0",
+  "bugs": {
+    "url": "https://github.com/paipeng/cp_httpclient/issues"
+  },
+  "homepage": "https://github.com/paipeng/cp_httpclient#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jpeg-js": "^0.4.3",
+    "npmlog": "^6.0.1"
+  }
+}
