@@ -7,10 +7,14 @@ var CPResult = require('./cp_result');
 var CPInitRequest = require('./model/cp_init_request');
 var CPInitResponse = require('./model/cp_init_response');
 var CPNanogridDecoder = require('./model/cp_nanogriddecoder');
-var httpClient = new CPClient(serverUrl, webServiceToken, packageName);
+
+var config = require('./config.json');
+
+var httpClient = new CPClient(config.serverUrl, config.webServiceToken, config.packageName);
+
 
 // test init
-var initRequest = new CPInitRequest(deviceType, udid, systemId);
+var initRequest = new CPInitRequest(config.deviceType, config.udid, config.systemId);
 
 
 function readImageToBase64() {
